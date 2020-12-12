@@ -4,9 +4,12 @@ This is an example of a sketch that accepts poses either from PoseNet, or from a
 JSON file that was created by [P5 PoseNet
 Recorder](https://github.com/osteele/p5pose-recorder).
 
-To use it, run [P5 PoseNet Recorder](https://github.com/osteele/p5pose-recorder)
-to create some JSON pose files. You can use the online version of [P5 PoseNet
-Recorder] (https://osteele.github.io/p5pose-recorder/) for this.
+You can try it out online [here](https://osteele.github.io/p5pose-playback/).
+
+To create PoseNet files for it, run [P5 PoseNet
+Recorder](https://github.com/osteele/p5pose-recorder) to create some JSON pose
+files. You can use the online version of [P5 PoseNet
+Recorder](https://osteele.github.io/p5pose-recorder/) for this.
 
 Move the files into the `assets` directory in this folder, and optionally rename
 them. Modify the array that is used as an argument to `loadPoseFiles()` on lines
