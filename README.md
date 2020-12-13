@@ -26,8 +26,10 @@ To use in your own sketch:
    project instead.
 3. Modify the arguments to `loadPoseFiles()`, as specified above.
 4. Find the line is `sketch.js` that begins with:
-   ```
+
+   ```js
    /** Copy the code from here to the end of the file
    ```
+
    Copy the `index.html` file, from this line to the end of the file, into your
    sketch.
