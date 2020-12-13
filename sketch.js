@@ -57,29 +57,31 @@ function drawSkeleton(pose) {
 
 /** Copy the code from here to the end of the file to your own sketch. */
 
-let posenetPlaybackManager;
+let posenetRecordingPlayer;
 
 function loadPoseFiles(poseJsonUrls) {
-  posenetPlaybackManager = new PlaybackManager();
-  posenetPlaybackManager.loadPoseFiles(poseJsonUrls);
+  posenetRecordingPlayer = new PoseNetRecordingPlayer();
+  posenetRecordingPlayer.loadPoseFiles(poseJsonUrls);
 }
 
 function handlePoses(poses) {
-  if (!posenetPlaybackManager.isPlaying) {
+  if (!posenetRecordingPlayer.isPlaying()) {
     currentPose = poses[0];
   }
 }
 
-class PlaybackManager {
+class PoseNetRecordingPlayer {
   constructor() {
-    this.isPlaying = false;
+    this._isPlaying = false;
+    this._loop = false;
   }
 
   loadPoseFiles(poseJsonUrls) {
     const poseNameFromUrl = url => url
       .replace(/.*\//, '')
       .replace(/\.json$/, '')
-      .replace(/^pose-|-pose$/g, '');
+      .replace(/^pose-|-pose$/g, '')
+      .replace(/[_-]/g, ' ');
 
     this.recordedPoses = poseJsonUrls.map(url => ({
       name: poseNameFromUrl(url),
@@ -94,12 +96,16 @@ class PlaybackManager {
     poseMenu.changed(() => this.selectPose(poseMenu.value()));
   }
 
+  isPlaying() {
+    return this._isPlaying;
+  }
+
   selectPose(poseName) {
     this.startTime = millis();
     this.record = this.recordedPoses.find(({ name }) => name === poseName);
-    this.isPlaying = Boolean(this.record);
+    this._isPlaying = Boolean(this.record);
     this.index = 0;
-    if (this.isPlaying) {
+    if (this._isPlaying) {
       this.scheduleNextPose();
     } else if (this.timeoutID) {
       clearTimeout(this.timeoutID);
@@ -128,7 +134,7 @@ class PlaybackManager {
         return pose;
       }
     }
-    if (this.loop) {
+    if (this._loop) {
       this.index = 0;
       return poses[0];
     }
