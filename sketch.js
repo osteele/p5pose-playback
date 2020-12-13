@@ -1,12 +1,11 @@
 let currentPose;
 
 function preload() {
-  loadPoseFiles(
-    [
-      "assets/standing-pose.json",
-      "assets/hands-up-pose.json",
-      "assets/hands-out-pose.json"
-    ]);
+  loadPoseFiles([
+    "assets/standing-pose.json",
+    "assets/hands-up-pose.json",
+    "assets/hands-out-pose.json",
+  ]);
 }
 
 function setup() {
@@ -17,7 +16,8 @@ function setup() {
   let poseNet = ml5.poseNet(
     cam,
     { flipHorizontal: true, detectionType: "single" },
-    () => select("#status").hide());
+    () => select("#status").hide()
+  );
 
   poseNet.on("pose", handlePoses);
 
@@ -77,13 +77,14 @@ class PoseNetRecordingPlayer {
   }
 
   loadPoseFiles(poseJsonUrls) {
-    const poseNameFromUrl = url => url
-      .replace(/.*\//, '')
-      .replace(/\.json$/, '')
-      .replace(/^pose-|-pose$/g, '')
-      .replace(/[_-]/g, ' ');
+    const poseNameFromUrl = (url) =>
+      url
+        .replace(/.*\//, "")
+        .replace(/\.json$/, "")
+        .replace(/^pose-|-pose$/g, "")
+        .replace(/[_-]/g, " ");
 
-    this.recordedPoses = poseJsonUrls.map(url => ({
+    this.recordedPoses = poseJsonUrls.map((url) => ({
       name: poseNameFromUrl(url),
       data: loadJSON(url),
     }));
